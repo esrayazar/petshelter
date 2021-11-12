@@ -1,2 +1,3 @@
 # petshelter
-Belt Exam
+This Project is for MERN stack Belt Exam.
+Author: Esra YAZAR
