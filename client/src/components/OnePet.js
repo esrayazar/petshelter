@@ -2,6 +2,7 @@ import React,{ useEffect, useState }from "react";
 import axios from "axios";
 import {Link, navigate } from "@reach/router";
 
+
 const OnePet =(props)=>{
     const{id} =props;
     const [errors, setErrors]= useState("")
@@ -45,6 +46,14 @@ const OnePet =(props)=>{
                 <strong>{pet.type}</strong> <br/>
                 <label className="m-3">Description: </label>
                 <strong>{pet.description}</strong> <br/>
+                <label className="m-3">Skills: </label>
+                
+                    {pet.skills
+                    ? pet.skills.map((skill, index)=>(
+                     <span className="badge badge-pill badge-primary" key={index}>
+                         {skill} </span>
+                     ))
+                    :null } 
                 <button className=" m-2 btn-sm fw-bold"
                             onClick={()=> adoptFilter(pet._id)}>
                             Adopt

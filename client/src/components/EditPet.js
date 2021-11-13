@@ -11,7 +11,8 @@ const EditPet = (props)=>{
     const[name,setName] =useState("");
     const[type,setType] = useState("");
     const[description, setDescription] = useState("")
-    const[skill,setSkill] = useState([])
+    //const[skill,setSkill] = useState([])
+    const[skills,setSkills] = useState([])
     useEffect(()=> {
         axios
         .get(`http://localhost:8000/api/petshelter/${id}`)
@@ -20,6 +21,7 @@ const EditPet = (props)=>{
             setName(res.data.name);
             setType(res.data.type);
             setDescription(res.data.description);
+            setSkills(res.data.skills)
             
         })
         .catch((err)=>{
@@ -33,7 +35,8 @@ const EditPet = (props)=>{
         {
             name,
             type,
-            description
+            description,
+            skills
         })
         .then((res)=>{
             console.log(res);
@@ -46,6 +49,26 @@ const EditPet = (props)=>{
             setErrors(err.response.data.errors);
         })
     }
+
+const setPetSkill =(val, ind)=>{
+    let updatedPetSkills = [];
+    let removeEmpty = false;
+    if (val.length == 0) removeEmpty = true;
+
+    let counter = 0;
+    skills.forEach(element => {
+        if(removeEmpty && (ind == counter)) {
+            console.log("empty skill should be removed");
+        } else {
+            updatedPetSkills.push(element);
+        }
+        
+        counter++;
+    });
+    if(!removeEmpty) updatedPetSkills[ind] = val;
+    setSkills(updatedPetSkills);
+}
+
     return(
         <div className="container d-flex justify-content-center">  
             <div className= "row w-50 d-flex float-left" > 
@@ -72,7 +95,11 @@ const EditPet = (props)=>{
                 <label className="m-3">Description</label>
                 <input onChange={(e)=>setDescription(e.target.value)} name="description" type="text" value={description}/> <br/>
                 <label className="m-3">Skill</label>
-                <input onChange={(e)=>setSkill(e.target.value)} name="skill" type="text" value={skill}/> <br/>
+                {skills
+                    ? skills.map((skill, index)=>(
+                        <input key={index} onChange={(e)=>setPetSkill(e.target.value, index)} name="skill" type="text" value={skill}/>
+                     ))
+                    :null }
                 <input  className="btn btn-primary m-2" type= "submit"/>
                 <button  className="btn btn-primary m-2" onClick={()=>navigate("/")}>Cancel</button>
                 <br/>

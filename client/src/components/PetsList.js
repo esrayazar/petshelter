@@ -84,15 +84,19 @@ const PetsList = (props)=>{
                         </td>
                         <td>{pet.type}</td>
                         <td>{pet.description}</td>
-                        <td>{pet.skills}</td>
+                        <td>{pet.skills
+                    ? pet.skills.map((skill, index)=>(
+                     <span className="badge badge-pill badge-primary" key={index}>
+                         {skill} </span>
+                     ))
+                    :null }</td>
                         <td >
 
                         <Link to={`/petshelter/edit/${pet._id}`}>
-                        <button className="gradiant m-2 btn-sm text-light fw-bold "
-                         >Edit</button>
+                        <button className="gradiant m-2 btn-sm fw-bold ">Edit</button>
                         </Link>
 
-                        <button className="gradiant m-2 btn-sm text-white fw-bold"
+                        <button className="gradiant m-2 btn-sm fw-bold"
                             onClick={()=> adoptFilter(pet._id)}>
                             Adopt
                         </button>

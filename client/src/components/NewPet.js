@@ -9,7 +9,7 @@ const NewPet = (props)=>{
     const [type, setType] =useState("");
     const [description, setDescription] = useState("")
     const [name, setName] =useState("")
-    const [skill, setSkill] =useState([])
+    const [skill, setSkill] =useState("")
 
     const submitHandler =(e)=>{
         e.preventDefault();
