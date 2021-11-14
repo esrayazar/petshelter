@@ -81,13 +81,9 @@ const OnePet =(props)=>{
                 <label className="m-3">Description: </label>
                 <strong>{pet.description}</strong> <br/>
                 <label className="m-3">Skills: </label> <br/>
-                
-                    {pet.skills
-                    ? pet.skills.map((skill, index)=>(
-                     <span className="badge badge-pill badge-primary" key={index}>
-                         {skill} </span>
-                     ))
-                    :null } 
+                {pet.skill1 ? <p> {pet.skill1}</p>:null} 
+                {pet.skill2 ? <p> {pet.skill2}</p>:null}
+                {pet.skill3 ? <p> {pet.skill3}</p>:null}
                     <div className="row mx-5">
                         <div className="col">
                     <button className="btn btn-success m-4 mybuttons " 
