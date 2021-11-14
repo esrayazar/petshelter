@@ -21,12 +21,18 @@ const PetSchema = new mongoose.Schema({
         minlength:[3,"A pet description must be at least 3 characters long"]
 
     },
-    skills:{
-        type: [{
-          type: String,
-        }],
-        validate: [arrayLimit, '{PATH} exceeds the limit of 3']
-      }
+    skill1 :{
+        type:String
+    },
+    skill2 :{
+        type:String
+    },
+    skill3 :{
+        type:String
+    },
+    like:{
+        type:Number
+    }
 
 },{timestamps:true})
 

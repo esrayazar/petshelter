@@ -7,12 +7,13 @@ const EditPet = (props)=>{
 
     const [errors, setErrors] = useState({});
     const {id} = props;
-    // const [pet, setPet] = useState("")
     const[name,setName] =useState("");
     const[type,setType] = useState("");
     const[description, setDescription] = useState("")
     //const[skill,setSkill] = useState([])
-    const[skills,setSkills] = useState([])
+    const[skill1,setSkill1] = useState("");
+    const[skill2,setSkill2] = useState("");
+    const[skill3,setSkill3] = useState("");
     useEffect(()=> {
         axios
         .get(`http://localhost:8000/api/petshelter/${id}`)
@@ -21,7 +22,9 @@ const EditPet = (props)=>{
             setName(res.data.name);
             setType(res.data.type);
             setDescription(res.data.description);
-            setSkills(res.data.skills)
+            setSkill1(res.data.skill1);
+            setSkill2(res.data.skill2);
+            setSkill3(res.data.skill3);
             
         })
         .catch((err)=>{
@@ -36,7 +39,9 @@ const EditPet = (props)=>{
             name,
             type,
             description,
-            skills
+            skill1,
+            skill2,
+            skill3
         })
         .then((res)=>{
             console.log(res);
@@ -50,68 +55,64 @@ const EditPet = (props)=>{
         })
     }
 
-const setPetSkill =(val, ind)=>{
-    let updatedPetSkills = [];
-    let removeEmpty = false;
-    if (val.length == 0) removeEmpty = true;
-
-    let counter = 0;
-    skills.forEach(element => {
-        if(removeEmpty && (ind == counter)) {
-            console.log("empty skill should be removed");
-        } else {
-            updatedPetSkills.push(element);
-        }
-        
-        counter++;
-    });
-    if(!removeEmpty) updatedPetSkills[ind] = val;
-    setSkills(updatedPetSkills);
-}
-
     return(
-        <div className="container d-flex justify-content-center">  
-            <div className= "row w-50 d-flex float-left" > 
-            <h2 className = "text-start">Incredible friends</h2>
-            <Link to={`/`}>
-                Home
-            </Link>
-            <h4 className="p-3 mb-2 text-purple text-start">Edit this pet</h4>
+        <div className="container w-50">
+            <div className= "row d-flex justify-content-center" > 
+                <h2>Pet Shelter</h2>
+                <Link to={`/`} className="text-decoration-underline"> 
+                    back to home
+                </Link>
+                <h4 className="p-3 mb-2">Edit {name}</h4>
+            </div>
+            
             <form onSubmit={submitHandler}>
-
-            {/* // Front end validation
-
-            {                
-            pet.length<3?
-            <span className="text-danger">A pet name must be at least 3 characters long</span>
-            :null
-
-            } */}
-                <div className="border border-dark">
-                <label className="m-3">Name</label>
+            <div className= "row border border-dark border-4" > 
+                <div className= "col ">
+                <label className="m-3">Pet Name: </label> <br/>
                 <input onChange={(e)=>setName(e.target.value)} name="name" type="text" value={name}/> <br/>
-                <label className="m-3">Type</label>
+                <label className="m-3">Pet Type : </label><br/>
                 <input onChange={(e)=>setType(e.target.value)} name="type" type="text" value={type}/> <br/>
-                <label className="m-3">Description</label>
+                <label className="m-3">Pet Description : </label><br/>
                 <input onChange={(e)=>setDescription(e.target.value)} name="description" type="text" value={description}/> <br/>
-                <label className="m-3">Skill</label>
-                {skills
-                    ? skills.map((skill, index)=>(
-                        <input key={index} onChange={(e)=>setPetSkill(e.target.value, index)} name="skill" type="text" value={skill}/>
-                     ))
-                    :null }
-                <input  className="btn btn-primary m-2" type= "submit"/>
-                <button  className="btn btn-primary m-2" onClick={()=>navigate("/")}>Cancel</button>
                 <br/>
-
+                <button className="btn btn-primary btn-lg m-4 p-3 mybuttons">Edit pet</button>
+                </div>
+                <div className = "col">
+                <label className="m-3">Skills (optional)</label> <br/>
+                <label className="m-3">Skill 1</label>
+                <input onChange={(e)=>setSkill1(e.target.value)} name="skill1:" type="text" value={skill1}/> <br/>
+                <label className="m-3">Skill 2</label>
+                <input onChange={(e)=>setSkill2(e.target.value)} name="skill2" type="text" value={skill2}/> <br/>
+                <label className="m-3">Skill 3</label>
+                <input onChange={(e)=>setSkill3(e.target.value)} name="skill3" type="text" value={skill3}/> <br/>
+                </div>
+                
+               
+                <br/>
+                {
+                     errors.pet ?
+                     <span className="text-danger">{errors.pet.message}</span>
+                     :null
+                }
                 {
                     errors.name ?
                     <span className="text-danger">{errors.name.message}</span>
                     :null
                 }
-                </div>
-            </form>
+                { 
+                    errors.type ?
+                    <span className="text-danger">{errors.type.message}</span>
+                    :null
+                }
+                {
+                    errors.description ?
+                    <span className="text-danger">{errors.description.message}</span>
+                    :null
+                }
             </div>
+            </form>
+            
+
         </div>
     )
 }

@@ -1,35 +1,11 @@
 import React,{useEffect,useState} from "react";
 import axios from "axios";
 import { Link } from "@reach/router";
-import DataTable from 'react-data-table-component';
 
-const columns = [
-    {
-        name: 'Name',
-        //selector: row => row.name,
-        sortable: false,
-        cell: row => (
-			<Link to={`/petshelter/${row._id}`}>
-				{row.name}
-			</Link>
-		),
-    },
-    {
-        name: 'Type',
-        selector: row => row.type,
-        sortable: true,
-    },
-    {
-        name: 'Description',
-        selector: row => row.description,
-        sortable: false,
-    },
-];
 
 const PetsList = (props)=>{
 
     const [petsList, setPetsList] = useState([]);
-    const [data, setTableData] = useState([]);
 
     useEffect(() =>{
         axios
@@ -37,79 +13,59 @@ const PetsList = (props)=>{
         .then((res)=>{
             console.log(res.data);
             setPetsList(res.data);
-            setTableData(res.data);
         })
         .catch((err)=> console.log(err));
 
 
     }, []);
 
-    const adoptFilter = (idFromBelow) =>{
-        axios.delete(`http://localhost:8000/api/petshelter/${idFromBelow}`)
-        .then((res)=>{
-            console.log(res.data);
-            const newList = petsList.filter((pet, index)=> pet._id !==idFromBelow);
-            setPetsList(newList)
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
-    }
     return(
-        <div>
-            <h1>Incredible Pets</h1>
-            <Link to={`/petshelter/new`}>
-                Add a pet
-                </Link>
-                <p className="p-3 mb-2 text-purple fw-bold"> Our incredible friends :</p>
-            <table className="table table-striped table-bordered border-dark">
+        <div className="container w-50">
+            <div className = "row">
+            
+            <div className="col">
+            <h1>Pet Shelter</h1>
+            </div>
+            <div className="col d-flex align-items-center m-3">
+            <Link to={`/petshelter/new`} className="text-decoration-underline">
+                add a pet to the shelter
+            </Link>
+            </div>
+
+            </div>
+
+                <h4 className="p-3 mb-2 fw-bold">These pets are looking for a good home</h4>
+            <table className="table table-striped table-bordered border-dark border-dark border-4">
                 <thead>
                     <tr>
-                        <th>Pet Name</th>
+                        <th>Name</th>
                         <th>Type </th>
-                        <th>Description</th>
-                        <th>Skills</th>
-                        <th>Action available</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                 {petsList
                 ? petsList.map((pet, index)=>(
                     <tr key= {index}>
-                        <td className="fw-bold">
+                        <td className="fw-bold"><p>{pet.name}</p></td>
+                        <td>{pet.type}</td>
+                        
+                        <td>
                         <Link to={`/petshelter/${pet._id}`}>
-                        <p>{pet.name}</p>
+                        <span className=" fw-bold text-decoration-underline ">details</span>
+                        </Link> 
+                        <span> | </span>
+                        <Link to={`/petshelter/edit/${pet._id}`}>
+                        <span className=" fw-bold text-decoration-underline">edit</span>
                         </Link>
                         
-                        </td>
-                        <td>{pet.type}</td>
-                        <td>{pet.description}</td>
-                        <td>{pet.skills
-                    ? pet.skills.map((skill, index)=>(
-                     <span className="badge badge-pill badge-primary" key={index}>
-                         {skill} </span>
-                     ))
-                    :null }</td>
-                        <td >
-
-                        <Link to={`/petshelter/edit/${pet._id}`}>
-                        <button className="gradiant m-2 btn-sm fw-bold ">Edit</button>
-                        </Link>
-
-                        <button className="gradiant m-2 btn-sm fw-bold"
-                            onClick={()=> adoptFilter(pet._id)}>
-                            Adopt
-                        </button>
                         </td>
                     </tr>
                         ))
                 :null }
                 </tbody>
                 </table>            
-                <DataTable
-            columns={columns}
-            data={data}
-        />
+               { /* <DataTable columns={columns} data={data} /> */}
         </div>
         
     )
