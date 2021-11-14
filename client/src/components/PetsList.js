@@ -22,19 +22,20 @@ const PetsList = (props)=>{
     return(
         <div className="container w-50">
             <div className = "row">
-            
-            <div className="col">
-            <h1>Pet Shelter</h1>
+                <div className="col">
+                    <h1>Pet Shelter</h1>
+                </div>
+                <div className="col d-flex align-items-center m-3">
+                <Link to={`/petshelter/new`} className="text-decoration-underline">
+                    add a pet to the shelter
+                </Link>
+                </div>
             </div>
-            <div className="col d-flex align-items-center m-3">
-            <Link to={`/petshelter/new`} className="text-decoration-underline">
-                add a pet to the shelter
-            </Link>
+            <div className = "row">
+            <h4 className="p-3 mb-2 fw-bold">These pets are looking for a good home</h4>
             </div>
 
-            </div>
-
-                <h4 className="p-3 mb-2 fw-bold">These pets are looking for a good home</h4>
+                
             <table className="table table-striped table-bordered border-dark border-dark border-4">
                 <thead>
                     <tr>

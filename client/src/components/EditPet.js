@@ -57,12 +57,21 @@ const EditPet = (props)=>{
 
     return(
         <div className="container w-50">
-            <div className= "row d-flex justify-content-center" > 
+            <div className= "row d-flex justify-content-center" >
+                <div className="col"> 
                 <h2>Pet Shelter</h2>
+                </div>
+                <div className="col d-flex align-items-center m-3">
                 <Link to={`/`} className="text-decoration-underline"> 
                     back to home
                 </Link>
+                </div>
+            </div>
+            <div className= "row" >
+                <div className="col"> 
                 <h4 className="p-3 mb-2">Edit {name}</h4>
+                </div>
+                <div className="col"></div>
             </div>
             
             <form onSubmit={submitHandler}>

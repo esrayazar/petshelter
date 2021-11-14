@@ -106,9 +106,6 @@ const OnePet =(props)=>{
 }
 
 
-      
-            
-
     
 export default OnePet;
 
